@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Aula Bater ponto</string>
     <string name="title_activity_relatorio">RelatorioActivity</string>
+
+    <string name="relatorio">Relatório</string>
+    <string name="ok">OK</string>
 </resources>

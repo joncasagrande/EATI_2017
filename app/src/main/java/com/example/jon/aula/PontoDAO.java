@@ -2,7 +2,12 @@ package com.example.jon.aula;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jon on 18/05/17.
@@ -39,6 +44,31 @@ public class PontoDAO {
         contentValues.put(HORA, ponto.getHora().getTime());
         contentValues.put(ACAO,ponto.getAcao());
         return contentValues;
+    }
+
+    public List<Ponto> getPontosByDate(Date date){
+        List<Ponto> pontos = new ArrayList<>();
+        SQLiteDatabase database = sqliteDAO.getReadableDatabase();
+
+        String[] columns = new String[]{ID,HORA};
+        String select = DIA+"=?";
+        String[] selectArgs = new String[]{String.valueOf(date.getTime())};
+
+        Cursor returnDB = database.query(TABLE,columns,select,selectArgs,null,null,null);
+
+        if (returnDB.moveToFirst()) {
+            do {
+               Ponto ponto = new Ponto();
+
+                ponto.setId(returnDB.getInt(returnDB.getColumnIndex(ID)));
+                ponto.setHora(returnDB.getLong(returnDB.getColumnIndex(HORA)));
+
+                pontos.add(ponto);
+            } while (returnDB.moveToNext());
+        }
+
+        database.close();
+        return pontos;
     }
 
 }

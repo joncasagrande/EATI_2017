@@ -17,6 +17,9 @@ public class Ponto {
     private Date dia;
     private Time hora;
 
+    public Ponto() {
+    }
+
     public Ponto(int acao, Date dia, Time hora) {
         this.acao = acao;
         this.dia = dia;
@@ -54,6 +57,14 @@ public class Ponto {
     public void setHora(Time hora) {
         this.hora = hora;
     }
+    public void setHora(long hora){
+        if(this.hora == null){
+            this.hora = new Time(hora);
+        }else{
+            this.hora.setTime(hora);
+        }
+    }
+
 
     @Override
     public String toString() {
